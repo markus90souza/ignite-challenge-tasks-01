@@ -16,11 +16,16 @@ export function TaskList() {
 
   function handleCreateNewTask() {
     // Crie uma nova task com um id random,não permita criar caso o título seja vazio.
+    if(newTaskTitle === ''){
+      return;
+    }
+    
     const newTask = [{
       id: Math.random(),
       title: newTaskTitle,
       isComplete: false
     }, ...tasks];
+  
     setTasks(newTask);
     setNewTaskTitle('');
   }
@@ -42,14 +47,8 @@ export function TaskList() {
 
   function handleRemoveTask(id: number) {
     // Remova uma task da listagem pelo ID
-
-    // let removeTask = tasks.map(task => {
-    //   if(task.id === id) {
-       
-    //   }
-
-    //   return task;
-    // });
+    const removeTask = tasks.filter(task => task.id !== id);
+    setTasks(removeTask);
   }
 
   return (
@@ -60,7 +59,7 @@ export function TaskList() {
         <div className="input-group">
           <input 
             type="text" 
-            placeholder="Adicionar novo todo" 
+            placeholder="Adicionar novo todo"
             onChange={(e) => setNewTaskTitle(e.target.value)}
             value={newTaskTitle}
           />
